@@ -14,8 +14,12 @@ export function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.includes(pathname);
   const isAuthRoute = authRoutes.includes(pathname);
   
-  // Get the session token from cookies
-  const sessionToken = request.cookies.get('better-auth.session_token')?.value;
+  // Get the session token from cookies - try different possible cookie names
+  const sessionToken = request.cookies.get('better-auth.session_token')?.value ||
+                      request.cookies.get('better-auth.session-token')?.value ||
+                      request.cookies.get('session_token')?.value ||
+                      request.cookies.get('session-token')?.value;
+  
   const isAuthenticated = !!sessionToken;
   
   // If user is authenticated and trying to access auth routes, redirect to dashboard
@@ -24,7 +28,7 @@ export function middleware(request: NextRequest) {
   }
   
   // If user is not authenticated and trying to access protected routes, redirect to login
-  if (!isAuthenticated && !isPublicRoute && pathname !== '/') {
+  if (!isAuthenticated && !isPublicRoute && pathname !== '/' && !pathname.startsWith('/api/auth')) {
     return NextResponse.redirect(new URL('/auth/login', request.url));
   }
   

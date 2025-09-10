@@ -13,6 +13,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { toast } from "sonner";
 import { Loader2, Mail } from "lucide-react";
+import { AuthWrapper } from "@/components/auth-wrapper";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -21,7 +22,7 @@ const loginSchema = z.object({
 
 type LoginForm = z.infer<typeof loginSchema>;
 
-export default function LoginPage() {
+function LoginPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
@@ -40,13 +41,15 @@ export default function LoginPage() {
       const result = await signIn.email({
         email: data.email,
         password: data.password,
+        callbackURL: "/dashboard",
       });
 
       if (result.error) {
         toast.error(result.error.message || "Failed to sign in");
       } else {
         toast.success("Signed in successfully!");
-        router.push("/dashboard");
+        // Force a hard refresh to ensure session is properly loaded
+        window.location.replace("/dashboard");
       }
     } catch (error) {
       toast.error("An unexpected error occurred");
@@ -60,6 +63,7 @@ export default function LoginPage() {
     try {
       await signIn.social({
         provider: "google",
+        callbackURL: "/dashboard",
       });
     } catch (error) {
       toast.error("Failed to sign in with Google");
@@ -161,5 +165,13 @@ export default function LoginPage() {
         </p>
       </CardFooter>
     </Card>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <AuthWrapper>
+      <LoginPageContent />
+    </AuthWrapper>
   );
 }

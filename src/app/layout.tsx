@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "@/components/session-provider";
 import { QueryProvider } from "@/components/query-provider";
+import { SessionDebug } from "@/components/session-debug";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -33,6 +34,7 @@ export default function RootLayout({
         <QueryProvider>
           <SessionProvider>
             {children}
+            <SessionDebug />
             <Toaster />
           </SessionProvider>
         </QueryProvider>
