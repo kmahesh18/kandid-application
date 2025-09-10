@@ -1,0 +1,929 @@
+### Kandid Application API Testing Suite
+### Comprehensive API tests using real data for demo purposes
+### Base URL: http://localhost:3000
+
+### Authentication Note: 
+### Some endpoints require authentication. Start the dev server and login first.
+### User IDs from database:
+### - DzoDkjUaARocq1swpsDlW2ox8FI0tQGZ (Mahesh Kumar)
+### - LhLjosRDA6QYXucSfU82eTyknbT4m3sP (KOLLI MAHESH KUMAR)  
+### - 4sFSCzfO8KaBHvcrfGwwf0XOUb6dfeKS (Mahesh)
+### - AtlYJBYyubnZdwSi9VZdNan3tWbUcZ6S (Mahesh)
+### - 0EAw2jy6tRe5YBNJGtMcgsdXIquPC0NE (Mahi)
+### - cktkJz1EdrYHZVSgk8P41q229JNAqcSg (Test User)
+
+##########################################################
+### 🔐 AUTHENTICATION ENDPOINTS
+##########################################################
+
+### Sign In with Email (Demo User)
+POST http://localhost:3000/api/auth/sign-in/email
+Content-Type: application/json
+
+{
+  "email": "maheshkolli888@gmail.com",
+  "password": "demo123",
+  "callbackURL": "http://localhost:3000/dashboard"
+}
+
+###
+
+### Sign Up New User
+POST http://localhost:3000/api/auth/sign-up/email
+Content-Type: application/json
+
+{
+  "name": "Demo User",
+  "email": "demo@kandid.app",
+  "password": "demo123456",
+  "callbackURL": "http://localhost:3000/dashboard"
+}
+
+###
+
+### Sign Out
+POST http://localhost:3000/api/auth/sign-out
+Content-Type: application/json
+
+{}
+
+###
+
+### Get Current Session
+GET http://localhost:3000/api/auth/get-session
+
+##########################################################
+### 📊 ANALYTICS ENDPOINTS
+##########################################################
+
+### Get Dashboard Analytics
+GET http://localhost:3000/api/analytics/dashboard
+
+###
+
+### Get Analytics with Date Range
+GET http://localhost:3000/api/analytics/dashboard?startDate=2024-01-01&endDate=2024-12-31
+
+##########################################################
+### 🎯 CAMPAIGNS ENDPOINTS
+##########################################################
+
+### Get All Campaigns
+GET http://localhost:3000/api/campaigns
+
+###
+
+### Get Campaigns with Pagination
+GET http://localhost:3000/api/campaigns?page=1&limit=10
+
+###
+
+### Get Campaigns with Status Filter
+GET http://localhost:3000/api/campaigns?status=active
+
+###
+
+### Create New Enterprise Campaign
+POST http://localhost:3000/api/campaigns
+Content-Type: application/json
+
+{
+  "name": "Q2 2024 Enterprise Expansion",
+  "description": "Targeting Fortune 500 companies for enterprise SaaS adoption. Focus on digital transformation initiatives and cost optimization.",
+  "status": "draft"
+}
+
+###
+
+### Create New Startup Campaign
+POST http://localhost:3000/api/campaigns
+Content-Type: application/json
+
+{
+  "name": "YC Startup Outreach Program",
+  "description": "Reaching out to Y Combinator startups for early-stage partnerships and pilot programs.",
+  "status": "active"
+}
+
+###
+
+### Create Education Sector Campaign
+POST http://localhost:3000/api/campaigns
+Content-Type: application/json
+
+{
+  "name": "EdTech Innovation Initiative",
+  "description": "Educational technology companies seeking modern learning platforms and student engagement tools.",
+  "status": "active"
+}
+
+###
+
+### Get Specific Campaign (Replace with actual campaign ID)
+GET http://localhost:3000/api/campaigns/{{campaign_id}}
+
+###
+
+### Update Campaign Status to Active
+PUT http://localhost:3000/api/campaigns/{{campaign_id}}
+Content-Type: application/json
+
+{
+  "status": "active",
+  "description": "Updated campaign description with new targeting criteria and expanded scope."
+}
+
+###
+
+### Update Campaign to Completed
+PUT http://localhost:3000/api/campaigns/{{campaign_id}}
+Content-Type: application/json
+
+{
+  "status": "completed",
+  "name": "Q1 2024 Enterprise Outreach - COMPLETED"
+}
+
+###
+
+### Delete Campaign
+DELETE http://localhost:3000/api/campaigns/{{campaign_id}}
+
+##########################################################
+### 👥 LEADS ENDPOINTS
+##########################################################
+
+### Get All Leads
+GET http://localhost:3000/api/leads
+
+###
+
+### Get Leads with Pagination and Filters
+GET http://localhost:3000/api/leads?page=1&limit=20&status=contacted&sortBy=score&sortOrder=desc
+
+###
+
+### Get High-Score Leads
+GET http://localhost:3000/api/leads?minScore=80&sortBy=score&sortOrder=desc
+
+###
+
+### Get Leads by Campaign
+GET http://localhost:3000/api/leads?campaignId={{campaign_id}}
+
+###
+
+### Get Pending Leads
+GET http://localhost:3000/api/leads?status=pending
+
+###
+
+### Get Converted Leads
+GET http://localhost:3000/api/leads?status=converted
+
+###
+
+### Create High-Value Enterprise Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "john.doe@megacorp.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "company": "MegaCorp Industries",
+  "title": "Chief Technology Officer",
+  "tags": ["enterprise", "decision-maker", "high-value", "technology"],
+  "score": 95,
+  "notes": "CTO at Fortune 100 company. Expressed interest in enterprise AI solutions during TechCrunch conference. High priority lead with $2M+ potential deal size."
+}
+
+###
+
+### Create Startup Founder Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "sarah.founder@techstartup.io",
+  "firstName": "Sarah",
+  "lastName": "Mitchell",
+  "company": "TechStartup.io",
+  "title": "Founder & CEO",
+  "tags": ["startup", "founder", "y-combinator", "ai-ml"],
+  "score": 88,
+  "notes": "Y Combinator W24 batch founder. Building AI-powered customer service platform. Series A funding secured. Looking for enterprise partnerships."
+}
+
+###
+
+### Create University Partnership Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "prof.tech@university.edu",
+  "firstName": "Dr. Maria",
+  "lastName": "Rodriguez",
+  "company": "Tech University",
+  "title": "Computer Science Department Chair",
+  "tags": ["education", "university", "research", "partnership"],
+  "score": 72,
+  "notes": "Leading computer science research department. Interested in industry partnerships for student internships and collaborative research projects."
+}
+
+###
+
+### Create Healthcare Technology Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "director@healthtech.org",
+  "firstName": "Dr. Robert",
+  "lastName": "Kim",
+  "company": "HealthTech Solutions",
+  "title": "Director of Digital Innovation",
+  "tags": ["healthcare", "digital-health", "compliance", "HIPAA"],
+  "score": 85,
+  "notes": "Digital health innovation leader. Working on HIPAA-compliant patient management systems. Budget approved for Q2 2024 technology upgrades."
+}
+
+###
+
+### Create FinTech Lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "vp.tech@fintech.com",
+  "firstName": "Alex",
+  "lastName": "Johnson",
+  "company": "FinTech Innovations",
+  "title": "VP of Technology",
+  "tags": ["fintech", "payments", "security", "api"],
+  "score": 91,
+  "notes": "VP of Technology at Series B fintech startup. Building next-gen payment infrastructure. Needs secure, scalable API solutions for 10M+ transactions."
+}
+
+###
+
+### Get Specific Lead (Replace with actual lead ID)
+GET http://localhost:3000/api/leads/{{lead_id}}
+
+###
+
+### Update Lead Status to Contacted
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "contacted",
+  "notes": "Initial outreach completed via LinkedIn and email. Scheduled discovery call for next Tuesday.",
+  "score": 78
+}
+
+###
+
+### Update Lead to Responded
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "responded",
+  "notes": "Lead responded positively to initial outreach. Requested detailed product demo and pricing information.",
+  "score": 82
+}
+
+###
+
+### Update Lead to Converted
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "converted",
+  "notes": "Successfully closed deal! Contract signed for $150k annual subscription. Implementation starts next month.",
+  "score": 95
+}
+
+###
+
+### Assign Lead to Campaign
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "campaignId": "{{campaign_id}}",
+  "notes": "Lead assigned to Q2 Enterprise Campaign based on company size and budget requirements."
+}
+
+###
+
+### Delete Lead
+DELETE http://localhost:3000/api/leads/{{lead_id}}
+
+##########################################################
+### 💬 LEAD INTERACTIONS ENDPOINTS
+##########################################################
+
+### Get All Interactions for a Lead
+GET http://localhost:3000/api/leads/{{lead_id}}/interactions
+
+###
+
+### Create Email Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "email",
+  "content": "Sent initial outreach email with personalized value proposition based on their recent funding announcement. Included case study from similar company in their sector showing 40% efficiency improvement.",
+  "timestamp": "2024-03-15T10:30:00Z"
+}
+
+###
+
+### Create Discovery Call Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "call",
+  "content": "30-minute discovery call completed. Key insights: Current solution lacking scalability, budget of $200k approved for Q2, decision timeline is 6 weeks. Next step: technical demo with their engineering team.",
+  "timestamp": "2024-03-18T14:00:00Z"
+}
+
+###
+
+### Create Demo Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "demo",
+  "content": "Live product demo conducted for technical team (CTO, 2 senior engineers, product manager). Demonstrated API capabilities, security features, and scalability. Very positive reception - they want POC next week.",
+  "timestamp": "2024-03-22T15:30:00Z"
+}
+
+###
+
+### Create Meeting Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "meeting",
+  "content": "Executive meeting with C-suite team. Presented business case and ROI analysis. CEO expressed strong interest. CFO requested detailed pricing and contract terms. Legal team to review agreement.",
+  "timestamp": "2024-03-25T11:00:00Z"
+}
+
+###
+
+### Create Follow-up Email Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "email",
+  "content": "Follow-up email sent with: 1) Pricing proposal for enterprise tier, 2) Implementation timeline, 3) Reference contacts from 3 similar customers, 4) Security compliance documentation. Requested feedback by Friday.",
+  "timestamp": "2024-03-26T09:15:00Z"
+}
+
+###
+
+### Create Negotiation Call Interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "call",
+  "content": "Pricing negotiation call with procurement team. Agreed on 15% discount for 2-year commitment. Finalized implementation support terms. Contract to be prepared by legal teams. Target signing date: next Friday.",
+  "timestamp": "2024-03-28T16:45:00Z"
+}
+
+##########################################################
+### 👤 USER PROFILE ENDPOINTS
+##########################################################
+
+### Get User Profile
+GET http://localhost:3000/api/user/profile
+
+###
+
+### Update User Profile
+PUT http://localhost:3000/api/user/profile
+Content-Type: application/json
+
+{
+  "name": "Mahesh Kumar (Updated)",
+  "image": "https://example.com/avatar.jpg"
+}
+
+###
+
+### Get User Sessions
+GET http://localhost:3000/api/user/sessions
+
+###
+
+### Update User Password
+PUT http://localhost:3000/api/user/password
+Content-Type: application/json
+
+{
+  "currentPassword": "oldpassword",
+  "newPassword": "newpassword123"
+}
+
+###
+
+### Upload User Avatar
+POST http://localhost:3000/api/user/avatar
+Content-Type: multipart/form-data
+
+{
+  "avatar": "{{file_upload}}"
+}
+
+###
+
+### Get User Notifications Settings
+GET http://localhost:3000/api/user/notifications
+
+###
+
+### Update Notification Settings
+PUT http://localhost:3000/api/user/notifications
+Content-Type: application/json
+
+{
+  "emailNotifications": true,
+  "pushNotifications": false,
+  "leadUpdates": true,
+  "campaignReminders": true
+}
+
+###
+
+### Send Test Email
+POST http://localhost:3000/api/user/test-email
+Content-Type: application/json
+
+{
+  "to": "test@example.com",
+  "subject": "Test Email from Kandid App",
+  "content": "This is a test email to verify email functionality."
+}
+
+###
+
+### Verify Email Address
+POST http://localhost:3000/api/user/verify-email
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com",
+  "verificationCode": "123456"
+}
+
+##########################################################
+### 📈 DEMO WORKFLOW SCENARIOS
+##########################################################
+
+### 🎯 Scenario 1: New Lead Lifecycle Demo
+### Step 1: Create high-value lead
+POST http://localhost:3000/api/leads
+Content-Type: application/json
+
+{
+  "email": "ceo@unicorn-startup.com",
+  "firstName": "Jennifer",
+  "lastName": "Williams",
+  "company": "Unicorn Startup Inc",
+  "title": "CEO & Founder",
+  "tags": ["startup", "unicorn", "founder", "high-priority"],
+  "score": 98,
+  "notes": "CEO of $1B+ valuation startup. Recent IPO filing. Massive scaling challenges. Perfect fit for our enterprise platform."
+}
+
+### Step 2: First interaction (save lead_id from above)
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "email",
+  "content": "Congratulations on your IPO filing! Sent personalized outreach highlighting how we helped 3 other unicorns scale their operations 10x during their public transition.",
+  "timestamp": "2024-03-20T10:00:00Z"
+}
+
+### Step 3: Update lead status
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "contacted",
+  "notes": "Initial outreach sent. Mentioned mutual connection (investor). Highlighted relevant case studies."
+}
+
+###
+
+### 🎯 Scenario 2: Campaign Creation & Lead Assignment Demo
+### Step 1: Create campaign
+POST http://localhost:3000/api/campaigns
+Content-Type: application/json
+
+{
+  "name": "IPO-Ready Unicorn Outreach 2024",
+  "description": "Targeting unicorn startups preparing for IPO. Focus on operational scalability, compliance, and enterprise-grade security solutions.",
+  "status": "active"
+}
+
+### Step 2: Assign existing lead to campaign (use campaign_id from above)
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "campaignId": "{{campaign_id}}",
+  "notes": "Lead assigned to IPO-Ready Unicorn campaign. Perfect fit based on company stage and requirements."
+}
+
+###
+
+### 🎯 Scenario 3: Lead Nurturing & Conversion Demo
+### Step 1: Discovery call interaction
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "call",
+  "content": "45-minute discovery call with CEO and CTO. Key insights: Processing 100M+ requests/day, current infrastructure struggling, $5M budget allocated for platform modernization. Strong interest in our enterprise solution.",
+  "timestamp": "2024-03-22T14:00:00Z"
+}
+
+### Step 2: Update to responded
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "responded",
+  "score": 95,
+  "notes": "Very positive discovery call. Lead is highly qualified and has budget. Requested detailed proposal and technical architecture review."
+}
+
+### Step 3: Technical demo
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "demo",
+  "content": "2-hour technical deep-dive with their engineering team. Demonstrated handling 1B+ requests/day, real-time analytics, and enterprise security features. Engineering team very impressed with performance benchmarks.",
+  "timestamp": "2024-03-25T10:00:00Z"
+}
+
+### Step 4: Executive presentation
+POST http://localhost:3000/api/leads/{{lead_id}}/interactions
+Content-Type: application/json
+
+{
+  "type": "meeting",
+  "content": "Executive presentation to board of directors. Presented 18-month ROI projection showing $50M+ in cost savings and efficiency gains. Board approved moving forward with enterprise contract.",
+  "timestamp": "2024-03-28T15:00:00Z"
+}
+
+### Step 5: Convert lead
+PUT http://localhost:3000/api/leads/{{lead_id}}
+Content-Type: application/json
+
+{
+  "status": "converted",
+  "score": 100,
+  "notes": "🎉 DEAL CLOSED! $2.5M annual contract signed. Largest deal in company history. Implementation starts Q2 2024. Lead became customer and reference."
+}
+
+##########################################################
+### 🧪 TESTING UTILITIES
+##########################################################
+
+### Test API Health
+GET http://localhost:3000/api/health
+
+###
+
+### Get All Data for Debugging
+GET http://localhost:3000/api/debug/all-data
+
+###
+
+### Reset Demo Data (if endpoint exists)
+POST http://localhost:3000/api/debug/reset-demo-data
+
+##########################################################
+### 📝 NOTES FOR DEMO RECORDING
+##########################################################
+
+# 🎬 Demo Recording Tips:
+# 1. Start with dashboard analytics to show overview
+# 2. Show campaign management with different statuses
+# 3. Demonstrate lead creation and management
+# 4. Walk through lead lifecycle from creation to conversion
+# 5. Show interaction tracking and notes
+# 6. Highlight filtering and search capabilities
+# 7. Demonstrate user management features
+
+# 📊 Key Metrics to Highlight:
+# - 18+ campaigns across different industries
+# - 21+ leads with realistic company data
+# - 52+ interactions across multiple types
+# - 9.52% conversion rate (industry standard)
+# - Lead scoring from 60-100 points
+# - Multiple user types and use cases
+
+# 🎯 Demo Scenarios Available:
+# 1. Enterprise sales process (Fortune 500)
+# 2. Startup outreach (Y Combinator companies)
+# 3. University partnerships (Education sector)
+# 4. Healthcare technology (Compliance-focused)
+# 5. FinTech solutions (API-focused)
+
+### End of API Tests
+
+### 1. Authentication - Register User
+POST {{baseUrl}}/api/auth/sign-up/email
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "test@example.com",
+  "password": "testPassword123",
+  "confirmPassword": "testPassword123"  
+}
+
+### 2. Authentication - Login User
+POST {{baseUrl}}/api/auth/sign-in/email
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "testPassword123"
+}
+
+### 3. Get User Session (after login)
+GET {{baseUrl}}/api/auth/session
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 4. CAMPAIGNS API TESTS
+
+### 4.1. Create Campaign
+POST {{baseUrl}}/api/campaigns
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "name": "Q1 Lead Generation Campaign",
+  "description": "Target B2B SaaS companies for lead generation in Q1 2025",
+  "status": "draft"
+}
+
+### 4.2. Get All Campaigns
+GET {{baseUrl}}/api/campaigns?page=1&limit=10&search=&status=&sortBy=createdAt&sortOrder=desc
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 4.3. Update Campaign (replace with actual UUID from Create Campaign response)
+PATCH {{baseUrl}}/api/campaigns
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "ids": ["01234567-89ab-cdef-0123-456789abcdef"],
+  "data": {
+    "status": "active",
+    "description": "Updated description for Q1 campaign"
+  }
+}
+
+### Note: Replace "01234567-89ab-cdef-0123-456789abcdef" with actual campaign UUID from Create Campaign response
+
+### 4.4. Delete Campaign (replace with actual UUID from Create Campaign response)
+DELETE {{baseUrl}}/api/campaigns
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "ids": ["01234567-89ab-cdef-0123-456789abcdef"]
+}
+
+### 5. LEADS API TESTS
+
+### 5.1. Create Lead
+POST {{baseUrl}}/api/leads
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "email": "john.doe@techcorp.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "company": "TechCorp Solutions",
+  "title": "Marketing Director",
+  "status": "pending",
+  "notes": "Interested in our enterprise solution. Met at TechConf 2025.",
+  "score": 85
+}
+
+### 5.2. Create Another Lead with Campaign Assignment
+POST {{baseUrl}}/api/leads
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "email": "sarah.johnson@innovate.io",
+  "firstName": "Sarah",
+  "lastName": "Johnson",
+  "company": "Innovate.io",
+  "title": "VP of Sales",
+  "status": "contacted",
+  "notes": "Responded positively to initial outreach. Scheduled demo for next week.",
+  "score": 92,
+  "campaignId": "01234567-89ab-cdef-0123-456789abcdef"
+}
+
+### 5.3. Create Lead with Duplicate Email (should fail)
+POST {{baseUrl}}/api/leads
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "email": "john.doe@techcorp.com",
+  "firstName": "John",
+  "lastName": "Smith",
+  "company": "Different Company",
+  "title": "CEO"
+}
+
+### 5.4. Get All Leads with Pagination
+GET {{baseUrl}}/api/leads?page=1&limit=10&search=&company=&status=&campaign=&sortBy=createdAt&sortOrder=desc
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 5.5. Search Leads by Company
+GET {{baseUrl}}/api/leads?page=1&limit=10&search=&company=TechCorp&status=&campaign=&sortBy=createdAt&sortOrder=desc
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 5.6. Filter Leads by Status
+GET {{baseUrl}}/api/leads?page=1&limit=10&search=&company=&status=contacted&campaign=&sortBy=createdAt&sortOrder=desc
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 5.7. Update Lead (replace with actual lead UUID from Create Lead response)
+PUT {{baseUrl}}/api/leads/01234567-89ab-cdef-0123-456789abcdef
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe.updated@techcorp.com",
+  "company": "TechCorp Solutions Inc.",
+  "jobTitle": "Senior Marketing Director",
+  "status": "responded",
+  "notes": "Had a great demo call. Moving to proposal stage.",
+  "campaignId": "01234567-89ab-cdef-0123-456789abcdef"
+}
+
+### 5.8. Bulk Update Leads (replace with actual lead UUIDs)
+PATCH {{baseUrl}}/api/leads
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "ids": ["01234567-89ab-cdef-0123-456789abcdef", "fedcba98-7654-3210-fedc-ba9876543210"],
+  "data": {
+    "status": "contacted",
+    "notes": "Bulk updated via campaign outreach"
+  }
+}
+
+### 5.9. Get Single Lead Details (replace with actual lead UUID)
+GET {{baseUrl}}/api/leads/01234567-89ab-cdef-0123-456789abcdef
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 5.10. Delete Lead (replace with actual lead UUID)
+DELETE {{baseUrl}}/api/leads/01234567-89ab-cdef-0123-456789abcdef
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 5.11. Bulk Delete Leads (replace with actual lead UUIDs)
+DELETE {{baseUrl}}/api/leads
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "ids": ["01234567-89ab-cdef-0123-456789abcdef", "fedcba98-7654-3210-fedc-ba9876543210"]
+}
+
+### 6. ANALYTICS API TESTS
+
+### 6.1. Get Dashboard Analytics
+GET {{baseUrl}}/api/analytics/dashboard
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 7. ACCOUNT INTERACTIONS API TESTS
+
+### 7.1. Create Account Interaction (replace with actual lead UUID)
+POST {{baseUrl}}/api/leads/01234567-89ab-cdef-0123-456789abcdef/interactions
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "type": "email",
+  "subject": "Follow-up on Demo Request",
+  "content": "Hi John, thanks for your interest in our platform. I'd love to schedule a demo call with you this week.",
+  "contactedAt": "2025-09-09T10:00:00Z"
+}
+
+### 7.2. Create Phone Call Interaction (replace with actual lead UUID)
+POST {{baseUrl}}/api/leads/01234567-89ab-cdef-0123-456789abcdef/interactions
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "type": "call",
+  "subject": "Discovery Call",
+  "content": "30-minute discovery call. Discussed current pain points and solution requirements. Very interested in our enterprise features.",
+  "contactedAt": "2025-09-09T14:30:00Z"
+}
+
+### 8. USER PROFILE API TESTS
+
+### 8.1. Get User Profile
+GET {{baseUrl}}/api/user/profile
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 8.2. Update User Profile
+PUT {{baseUrl}}/api/user/profile
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "name": "Updated Test User",
+  "email": "updated.test@example.com"
+}
+
+### 8.3. Update Password
+PUT {{baseUrl}}/api/user/password
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "currentPassword": "testPassword123",
+  "newPassword": "newPassword456"
+}
+
+### 9. USER SESSIONS API TESTS
+
+### 9.1. Get Active Sessions
+GET {{baseUrl}}/api/user/sessions
+Cookie: better-auth.session_token={{sessionToken}}
+
+### 9.2. Revoke Session (replace with actual session ID)
+DELETE {{baseUrl}}/api/user/sessions
+Content-Type: application/json
+Cookie: better-auth.session_token={{sessionToken}}
+
+{
+  "sessionId": "actual-session-id-from-get-sessions-response"
+}
+
+### 10. LOGOUT
+POST {{baseUrl}}/api/auth/sign-out
+Cookie: better-auth.session_token={{sessionToken}}
+
+###
+### Test Scenarios:
+### 
+### 1. Authentication Flow:
+###    - Register new user → Login → Get session → Test protected endpoints
+### 
+### 2. Campaign Management:
+###    - Create campaign → Get campaigns → Update campaign → Delete campaign
+### 
+### 3. Lead Management:
+###    - Create leads (with and without campaign) → Get/filter/search leads → Update lead → Delete lead
+###    - Test duplicate email handling
+###    - Test bulk operations
+### 
+### 4. Data Integrity:
+###    - Create campaign and leads → Assign leads to campaign → Verify relationships
+###    - Test cascade deletes and orphaned data handling
+### 
+### 5. Error Handling:
+###    - Test invalid data → Test unauthorized access → Test not found scenarios
+### 
+### 6. Performance:
+###    - Test pagination with large datasets → Test concurrent requests
+###
+### Instructions:
+### 1. Start the development server: npm run dev
+### 2. Create a user account through the UI or registration endpoint
+### 3. Login and copy the session token from browser cookies
+### 4. Replace {{sessionToken}} with the actual token
+### 5. Run tests in sequence, replacing IDs with actual values from responses
+### 6. Verify all endpoints return expected data and proper error handling
