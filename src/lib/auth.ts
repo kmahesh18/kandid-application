@@ -40,7 +40,6 @@ export const auth = betterAuth({
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
         path: "/",
-        domain: process.env.NODE_ENV === "production" ? ".vercel.app" : undefined,
         maxAge: 60 * 60 * 24 * 7, // 7 days
       },
     },
