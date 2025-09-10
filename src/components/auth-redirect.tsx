@@ -15,12 +15,23 @@ export function AuthRedirect({ children, requireAuth = true, redirectTo = "/dash
   const router = useRouter();
 
   useEffect(() => {
+    console.log("AuthRedirect debug:", { 
+      session: session?.user ? "authenticated" : "not authenticated", 
+      isPending, 
+      requireAuth, 
+      redirectTo,
+      shouldRedirect: !requireAuth && session?.user
+    });
+
     if (isPending) return; // Wait for session check to complete
 
     if (requireAuth && !session?.user) {
+      console.log("Redirecting to login - not authenticated");
       router.push("/auth/login");
     } else if (!requireAuth && session?.user) {
-      router.push(redirectTo);
+      console.log("Redirecting to dashboard - already authenticated");
+      // Use replace instead of push for authentication redirects
+      window.location.replace(redirectTo);
     }
   }, [session, isPending, requireAuth, redirectTo, router]);
 

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { signIn } from "@/lib/auth-client";
+import { signIn, useSession } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,6 +26,15 @@ function LoginPageContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const router = useRouter();
+  const { data: session, isPending } = useSession();
+
+  // Direct redirect check as fallback
+  useEffect(() => {
+    if (!isPending && session?.user) {
+      console.log("Direct redirect from login page - user is authenticated");
+      window.location.replace("/dashboard");
+    }
+  }, [session, isPending]);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
