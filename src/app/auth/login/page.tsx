@@ -51,7 +51,7 @@ function LoginPageContent() {
       } else {
         toast.success("Signed in successfully!");
         // Let middleware handle the redirect after successful login
-        router.push("/dashboard");
+        window.location.replace("/dashboard");
       }
     } catch (error) {
       toast.error("An unexpected error occurred");
