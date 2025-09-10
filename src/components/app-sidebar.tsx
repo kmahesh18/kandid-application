@@ -68,7 +68,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const handleSignOut = async () => {
     try {
       await signOut();
-      router.push("/auth/login");
+      // Use hard redirect to avoid race condition with session state
+      window.location.href = "/auth/login";
     } catch (error) {
       console.error("Failed to sign out:", error);
     }
