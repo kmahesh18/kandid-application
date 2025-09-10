@@ -28,13 +28,7 @@ function LoginPageContent() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
 
-  // Direct redirect check as fallback
-  useEffect(() => {
-    if (!isPending && session?.user) {
-      console.log("Direct redirect from login page - user is authenticated");
-      window.location.replace("/dashboard");
-    }
-  }, [session, isPending]);
+  // Middleware handles authentication redirects, no need for client-side logic
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
@@ -57,8 +51,8 @@ function LoginPageContent() {
         toast.error(result.error.message || "Failed to sign in");
       } else {
         toast.success("Signed in successfully!");
-        // Force a hard refresh to ensure session is properly loaded
-        window.location.replace("/dashboard");
+        // Let middleware handle the redirect after successful login
+        router.push("/dashboard");
       }
     } catch (error) {
       toast.error("An unexpected error occurred");
