@@ -29,11 +29,11 @@ function LoginPageContent() {
   const { data: session, isPending } = useSession();
 
   // Client-side redirect fallback for production 307 redirect issues
-  // useEffect(() => {
-  //   if (!isPending && session?.user) {
-  //     window.location.href = "/dashboard";
-  //   }
-  // }, [session, isPending]);
+  useEffect(() => {
+    if (!isPending && session?.user) {
+      window.location.href = "/dashboard";
+    }
+  }, []);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
