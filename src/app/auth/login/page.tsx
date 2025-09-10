@@ -28,13 +28,6 @@ function LoginPageContent() {
   const router = useRouter();
   const { data: session, isPending } = useSession();
 
-  // Client-side redirect for authenticated users (fallback for middleware issues)
-  useEffect(() => {
-    if (!isPending && session?.user) {
-      console.log("User is authenticated, redirecting to dashboard");
-      window.location.href = "/dashboard";
-    }
-  }, [session, isPending]);
 
   const form = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
