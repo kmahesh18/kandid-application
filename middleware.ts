@@ -15,10 +15,14 @@ export function middleware(request: NextRequest) {
   const isAuthRoute = authRoutes.includes(pathname);
   
   // Get the session token from cookies - try different possible cookie names
-  const sessionToken = request.cookies.get('better-auth.session_token')?.value ||
-                      request.cookies.get('better-auth.session-token')?.value ||
-                      request.cookies.get('session_token')?.value ||
-                      request.cookies.get('session-token')?.value;
+  const sessionToken =
+  request.cookies.get('__Secure-better-auth.session_token')?.value ||
+  request.cookies.get('__Secure-better-auth.session-token')?.value ||
+  request.cookies.get('better-auth.session_token')?.value ||
+  request.cookies.get('better-auth.session-token')?.value ||
+  request.cookies.get('session_token')?.value ||
+  request.cookies.get('session-token')?.value;
+
   
   const isAuthenticated = !!sessionToken;
   
