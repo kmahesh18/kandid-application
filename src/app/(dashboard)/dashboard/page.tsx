@@ -3,7 +3,6 @@
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
 import { useDashboardAnalytics } from "@/hooks/queries/analytics";
 import { useUIStore } from "@/store/ui-store";
 import { 
@@ -12,10 +11,8 @@ import {
   Target, 
   Activity,
   AlertCircle,
-  CheckCircle,
   Clock,
   Plus,
-  ArrowUpRight,
   BarChart3,
   PieChart,
   Calendar
@@ -68,18 +65,6 @@ export default function DashboardPage() {
 
 	return (
 		<div className="flex flex-col gap-6">
-			{/* Quick Actions */}
-			<div className="flex flex-wrap gap-2 mb-4">
-				<Button onClick={() => setCreateCampaignOpen(true)} className="gap-2">
-					<Plus className="h-4 w-4" />
-					New Campaign
-				</Button>
-				<Button variant="outline" onClick={() => setCreateLeadOpen(true)} className="gap-2">
-					<Plus className="h-4 w-4" />
-					Add Lead
-				</Button>
-			</div>
-
 			{/* KPI Cards */}
 			<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 				<Card>
